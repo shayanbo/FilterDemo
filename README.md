@@ -1,5 +1,6 @@
 # FilterDemo
 a sample project demonstrating how to use the CIColorCube and 3DLut Image
+https://medium.com/@shayanbo/3dlut-filter-based-on-coreimage-22d31ba2f4e2
 
 ![image](https://user-images.githubusercontent.com/5426838/228289686-1ef04ad3-43e3-40c8-86c6-3fe106cbe536.png)
 ![image](https://user-images.githubusercontent.com/5426838/228289741-c3eff9a8-2e58-46ed-b66c-555b9eb88de8.png)

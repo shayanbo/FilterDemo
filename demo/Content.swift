@@ -9,45 +9,49 @@ import SwiftUI
 import Combine
 
 let context = CIContext(mtlDevice: MTLCreateSystemDefaultDevice()!)
-let luts = try! FileManager.default.contentsOfDirectory(atPath: "\(Bundle.main.bundlePath)/lut.bundle")
+let luts = [
+    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U"
+]
 
 struct Content : View {
     
-    @State var image: UIImage? = UIImage(named: "test")
+    @State var image = UIImage(named: "IMG_2548")!
     @State var lut: String?
     
     var body: some View {
         
         VStack(spacing: 20) {
             
-            Group {
-                if let image = image {
-                    Image(uiImage: image).resizable().scaledToFit()
-                } else {
-                    Text("Pick 1 filter below!")
-                }
-            }//.frame(width: 400, height: 400)
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFit()
+                .frame(height: 500)
             
-            Divider()
-            
-            List {
-                 ForEach(luts, id: \.self) { i in
-                     Text("\(i)").frame(width: 80, height: 100)
-                        .font(.system(size: 20))
-                        .backgroundStyle(.brown)
-                        .onTapGesture {
-                            lut = i
-                        }
+            ScrollView(.horizontal) {
+                LazyHStack {
+                    ForEach(luts, id: \.self) { lut in
+                        Text("\(lut)")
+                            .frame(width: 80, height: 100)
+                            .background(Color.gray.opacity(0.3))
+                            .foregroundColor(.white)
+                            .font(Font.system(size: 50, weight: .thin))
+                            .allowsHitTesting(true)
+                            .onTapGesture {
+                                self.lut = lut
+                            }
+                    }
                 }
             }
             
-        }.onChange(of: lut, perform: { newValue in
+        }
+        .background(.black)
+        .onChange(of: lut, perform: { newValue in
             
             guard let lut = newValue else { return }
             
-            guard let original = CIImage(image: UIImage(named: "test")!) else { return }
+            guard let original = CIImage(image: UIImage(named: "IMG_2548")!) else { return }
             
-            guard let lutImagePath = Bundle.main.path(forResource: "lut.bundle/\(lut)", ofType: nil) else { return }
+            guard let lutImagePath = Bundle.main.path(forResource: "lut.bundle/\(lut).png", ofType: nil) else { return }
             
             guard let lutImage = UIImage(contentsOfFile: lutImagePath) else { return }
             
